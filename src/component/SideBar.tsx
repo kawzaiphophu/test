@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -17,11 +17,12 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
-import { Switch } from '@mui/material';
+import { createTheme, Switch } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
+import { ThemeProvider } from '@emotion/react';
 
 const drawerWidth = 240;
 
@@ -51,7 +52,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'flex-end',
   padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
   ...theme.mixins.toolbar,
 }));
 
@@ -93,128 +93,142 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   }),
 );
+const lightTheme = createTheme({
+  palette: {
+    mode: 'light',
+  },
+});
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
 
 export default function SideBar() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(!open);
   };
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
 
   return (
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open} color='inherit'>
-        <Toolbar>
-          <div style={{ width: '100%' }}>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                borderRadius: 1,
-              }}
-            >
-              <Box sx={{
-                display: 'flex',
-                alignItems: 'center',
-                px: 2
-              }}>
-                <Typography variant="h6" component="div" >
-                  LOGO
-                </Typography>
-              </Box>
-              <Box sx={{
-                display: "flex "
-              }}>
-                <Box sx={{
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={open} color='inherit'>
+          <Toolbar>
+            <div style={{ width: '100%' }}>
+              <Box
+                sx={{
                   display: 'flex',
-                  alignItems: 'center',
-                  px: 2
-                }}><DarkModeIcon /><Switch /> <LightModeIcon />
-                </Box>
+                  justifyContent: 'space-between',
+                  borderRadius: 1,
+                }}
+              >
                 <Box sx={{
                   display: 'flex',
                   alignItems: 'center',
                   px: 2
                 }}>
-                  <AccountCircleIcon />
-                  <Box px={2}>
-                    <div>Name</div>
-                    <div>Status</div>
+                  <Typography variant="h6" component="div" >
+                    LOGO
+                  </Typography>
+                </Box>
+                <Box sx={{
+                  display: "flex "
+                }}>
+                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <LightModeIcon />
+                    <Switch checked={darkMode} onChange={toggleDarkMode} />
+                    <DarkModeIcon />
+                  </Box>
+                  <Box sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    px: 2
+                  }}>
+                    <AccountCircleIcon />
+                    <Box px={2}>
+                      <div>Name</div>
+                      <div>Status</div>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
-          </div>
-        </Toolbar>
-      </AppBar>
+            </div>
+          </Toolbar>
+        </AppBar>
 
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {[
-            { text: 'DashBoard', path: '/' },
-            { text: 'จัดการผู้ใช้งาน', path: '/manage-users' },
-            { text: 'จัดการคำสั่งซื้อ', path: '/manage-orders' },
-            { text: 'จัดการขนส่ง', path: '/manage-shippings' },
-            { text: 'จัดการเติมเงิน', path: '/manage-topups' },
-            { text: 'จัดการข่าว', path: '/manage-news' },
-            { text: 'จัดการแบนเนอร์', path: '/manage-banners' },
-            { text: 'จัดการโพสต์', path: '/manage-posts' },
-            { text: 'จัดการ Term', path: '/manage-term' },
-            { text: 'ติดต่อสอบถาม', path: '/contact' },
-            { text: 'จัดการ SEO', path: '/manage-seo' }
-          ].map(({ text, path }, index) => (
-            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
-                  width: 100
-                }}
-                component={Link}
-                to={path}
-              >
-                <ListItemIcon
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
+          </DrawerHeader>
+          <Divider />
+          <List>
+            {[
+              { text: 'DashBoard', path: '/' },
+              { text: 'จัดการผู้ใช้งาน', path: '/manage-users' },
+              { text: 'จัดการคำสั่งซื้อ', path: '/manage-orders' },
+              { text: 'จัดการขนส่ง', path: '/manage-shippings' },
+              { text: 'จัดการเติมเงิน', path: '/manage-topups' },
+              { text: 'จัดการข่าว', path: '/manage-news' },
+              { text: 'จัดการแบนเนอร์', path: '/manage-banners' },
+              { text: 'จัดการโพสต์', path: '/manage-posts' },
+              { text: 'จัดการ Term', path: '/manage-term' },
+              { text: 'ติดต่อสอบถาม', path: '/contact' },
+              { text: 'จัดการ SEO', path: '/manage-seo' }
+            ].map(({ text, path }, index) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : 'auto',
-                    justifyContent: 'center',
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
                   }}
+                  component={Link}
+                  to={path}
                 >
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
 
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-      </Drawer>
-      <Box sx={{display:"flex"}}>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          onClick={handleDrawerOpen}
-          edge="start"
-          sx={{
-           bgcolor:"#999999",
-           borderRadius:"0 10px 10px 0",
-           mt:10,
-           width:"30px",
-           height:"40px",
-           pl:2 
-          }}
-        
-        >
-          {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </IconButton></Box>
-    </Box>
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+        </Drawer>
+        <Box sx={{ display: "flex" }}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={handleDrawerOpen}
+            edge="start"
+            sx={{
+              bgcolor: "#999999",
+              borderRadius: "0 10px 10px 0",
+              mt: 10,
+              width: "30px",
+              height: "40px",
+              pl: 2
+            }}
+
+          >
+            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton></Box>
+      </Box>
+    </ThemeProvider>
   );
 }
