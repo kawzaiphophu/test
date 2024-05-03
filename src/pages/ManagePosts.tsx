@@ -1,8 +1,18 @@
-import React from 'react'
+import { Box } from '@mui/material'
+
 
 function ManagePosts() {
   return (
-    <div>ManagePosts</div>
+    <Box
+    sx={{
+      width: 'auto',
+      mt: 7,
+      p: 2,
+      borderRadius: 5,
+      bgcolor: "lightgrey"
+    }}>
+      ManagePosts
+    </Box>
   )
 }
 

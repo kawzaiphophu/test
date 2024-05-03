@@ -26,13 +26,15 @@ const DashboardChart: React.FC = () => {
   };
 
   return (
-    <Box sx={{margin: 2,bgcolor:"white"}}>
-      <Box 
-      sx={{ display: 'flex', 
-      justifyContent: 'space-between', 
-      alignItems: 'center', 
-      margin: 2,
-      padding:2 }}>
+    <Box sx={{ margin: 2, bgcolor: "white",borderRadius:5 }}>
+      <Box
+        sx={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          margin: 2,
+          padding: 2
+        }}>
         <h4>ยอดขายรวม {selectedYear}</h4>
         <Select value={selectedYear} onChange={handleChange}>
           <MenuItem value="2022">2022</MenuItem>
@@ -40,33 +42,36 @@ const DashboardChart: React.FC = () => {
           <MenuItem value="2024">2024</MenuItem>
         </Select>
       </Box>
-      <VictoryChart
-        domainPadding={20}
-        width={700}
-        height={300}
-      >
-        <VictoryAxis
-          tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-          tickFormat={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]}
-          style={{
-            axisLabel: { padding: 30 }
-          }}
-        />
-        <VictoryAxis
-          dependentAxis
-          style={{
-            axisLabel: { padding: 50 }
-          }}
-        />
-        <VictoryBar
-          data={chartData}
-          x="month"
-          y="sales"
-          barWidth={20}
-          labels={({ datum }) => `$${datum.sales}`}
-          labelComponent={<VictoryTooltip />}
-        />
-      </VictoryChart>
+      <Box sx={{paddingX:5}}>
+        <VictoryChart
+          domainPadding={20}
+          width={700}
+          height={300}
+        >
+          <VictoryAxis
+            tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+            tickFormat={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]}
+            style={{
+              axisLabel: { padding: 30 }
+            }}
+          />
+          <VictoryAxis
+            dependentAxis
+            style={{
+              axisLabel: { padding: 50 }
+            }}
+          />
+          <VictoryBar
+            data={chartData}
+            x="month"
+            y="sales"
+            barWidth={20}
+            labels={({ datum }) => `$${datum.sales}`}
+            labelComponent={<VictoryTooltip />}
+          />
+        </VictoryChart>
+      </Box>
+
     </Box>
   );
 }

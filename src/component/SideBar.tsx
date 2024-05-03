@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
+import { styled, Theme, CSSObject } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
@@ -15,16 +15,42 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
 import { createTheme, Switch } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
 import { ThemeProvider } from '@emotion/react';
+import { useLocation } from 'react-router-dom';
+import Chart_Line from '../assets/icon/icon/Interface/Chart_Line.svg'
+import Logo from '../assets/Harnkan logo 1.svg'
+import User_Icon from '../assets/icon/icon/User/User_Circle.svg'
+import ClipBoard from '../assets/icon/icon/clipboard-notes.svg'
+import Truck_icon from '../assets/icon/truck-delivery-outline.svg'
+import Wallet_icon from '../assets/icon/icon/wallet-outline.svg'
+import News_icon from '../assets/icon/icon/newspaper-folding.svg'
+import Tv_icon from '../assets/icon/icon/tv.svg'
+import Note_icon from '../assets/icon/icon/notebooks.svg'
+import Check_icon from '../assets/icon/icon/Warning/Wavy_Check.svg'
+import Chat_icon from '../assets/icon/icon/Communication/Chat_Circle_Dots.svg'
+import Globe_icon from '../assets/icon/icon/Navigation/Globe.svg'
 
 const drawerWidth = 240;
+
+
+const menuItems = [
+  { text: 'DashBoard', path: '/', icon: Chart_Line },
+  { text: 'จัดการผู้ใช้งาน', path: '/manage-users', icon: User_Icon },
+  { text: 'จัดการคำสั่งซื้อ', path: '/manage-orders', icon: ClipBoard },
+  { text: 'จัดการขนส่ง', path: '/manage-shippings', icon: Truck_icon },
+  { text: 'จัดการเติมเงิน', path: '/manage-topups', icon: Wallet_icon },
+  { text: 'จัดการข่าว', path: '/manage-news', icon: News_icon },
+  { text: 'จัดการแบนเนอร์', path: '/manage-banners', icon: Tv_icon },
+  { text: 'จัดการโพสต์', path: '/manage-posts', icon: Note_icon },
+  { text: 'จัดการ Term', path: '/manage-term', icon: Check_icon },
+  { text: 'ติดต่อสอบถาม', path: '/contact', icon: Chat_icon },
+  { text: 'จัดการ SEO', path: '/manage-seo', icon: Globe_icon }
+];
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -108,7 +134,7 @@ const darkTheme = createTheme({
 export default function SideBar() {
   const [open, setOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-
+  const location = useLocation();
   const handleDrawerOpen = () => {
     setOpen(!open);
   };
@@ -137,7 +163,7 @@ export default function SideBar() {
                   px: 2
                 }}>
                   <Typography variant="h6" component="div" >
-                    LOGO
+                    <img src={Logo} alt="" />
                   </Typography>
                 </Box>
                 <Box sx={{
@@ -170,25 +196,19 @@ export default function SideBar() {
           </DrawerHeader>
           <Divider />
           <List>
-            {[
-              { text: 'DashBoard', path: '/' },
-              { text: 'จัดการผู้ใช้งาน', path: '/manage-users' },
-              { text: 'จัดการคำสั่งซื้อ', path: '/manage-orders' },
-              { text: 'จัดการขนส่ง', path: '/manage-shippings' },
-              { text: 'จัดการเติมเงิน', path: '/manage-topups' },
-              { text: 'จัดการข่าว', path: '/manage-news' },
-              { text: 'จัดการแบนเนอร์', path: '/manage-banners' },
-              { text: 'จัดการโพสต์', path: '/manage-posts' },
-              { text: 'จัดการ Term', path: '/manage-term' },
-              { text: 'ติดต่อสอบถาม', path: '/contact' },
-              { text: 'จัดการ SEO', path: '/manage-seo' }
-            ].map(({ text, path }, index) => (
+            {menuItems.map(({ text, path, icon }, index) => (
               <ListItem key={text} disablePadding sx={{ display: 'block' }}>
                 <ListItemButton
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? 'initial' : 'center',
                     px: 2.5,
+                    backgroundColor: path === location.pathname ? '#F39B49' : 'inherit',
+                    color: path === location.pathname ? 'white' : 'inherit',
+                    '&:hover': {
+                      backgroundColor: '#CF7827', 
+                      color:'white'
+                    },
                   }}
                   component={Link}
                   to={path}
@@ -198,12 +218,15 @@ export default function SideBar() {
                       minWidth: 0,
                       mr: open ? 3 : 'auto',
                       justifyContent: 'center',
+                      filter: path === location.pathname ? "invert(1)":""
                     }}
                   >
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    <img src={icon}  
+                    alt="" 
+                    
+                    />
                   </ListItemIcon>
                   <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-
                 </ListItemButton>
               </ListItem>
             ))}
