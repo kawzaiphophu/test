@@ -29,7 +29,10 @@ const Buttons: React.FC<ButtonsProps> = ({ Text, Style, Size, Color }) => {
 
     return (
        <>
-         <Button
+         <Button 
+            sx={{
+                display:'flex'
+            }}
             className={`btn-${Size}`}
             variant={Style === 'text' ? 'text' : 'contained'}
             size={Size}

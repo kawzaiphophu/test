@@ -15,12 +15,11 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { createTheme, Switch } from '@mui/material';
+import { Switch, useTheme } from '@mui/material';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
-import { ThemeProvider } from '@emotion/react';
 import { useLocation } from 'react-router-dom';
 import Chart_Line from '../assets/icon/icon/Interface/Chart_Line.svg'
 import Logo from '../assets/Harnkan logo 1.svg'
@@ -36,7 +35,6 @@ import Chat_icon from '../assets/icon/icon/Communication/Chat_Circle_Dots.svg'
 import Globe_icon from '../assets/icon/icon/Navigation/Globe.svg'
 
 const drawerWidth = 240;
-
 
 const menuItems = [
   { text: 'DashBoard', path: '/', icon: Chart_Line },
@@ -119,139 +117,123 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
   }),
 );
-const lightTheme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-});
 
-const darkTheme = createTheme({
-  palette: {
-    mode: 'dark',
-  },
-});
-
-export default function SideBar() {
+export default function SideBar({ toggleDarkMode, darkMode }: { toggleDarkMode: any, darkMode: boolean }) {
   const [open, setOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const location = useLocation();
+  const theme = useTheme();
   const handleDrawerOpen = () => {
     setOpen(!open);
   };
 
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
 
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline />
-        <AppBar position="fixed" open={open} color='inherit'>
-          <Toolbar>
-            <div style={{ width: '100%' }}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  borderRadius: 1,
-                }}
-              >
+    <Box sx={{ display: 'flex' }}>
+      <CssBaseline />
+      <AppBar position="fixed" open={open} color='inherit'>
+        <Toolbar>
+          <div style={{ width: '100%' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                borderRadius: 1,
+              }}
+            >
+              <Box sx={{
+                display: 'flex',
+                alignItems: 'center',
+                px: 2
+              }}>
+                <Typography variant="h6" component="div" >
+                  <img src={Logo} alt="" />
+                </Typography>
+              </Box>
+              <Box sx={{
+                display: "flex "
+              }}>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                  <LightModeIcon />
+                  <Switch checked={darkMode} onChange={toggleDarkMode} />
+                  <DarkModeIcon />
+                </Box>
                 <Box sx={{
                   display: 'flex',
                   alignItems: 'center',
                   px: 2
                 }}>
-                  <Typography variant="h6" component="div" >
-                    <img src={Logo} alt="" />
-                  </Typography>
-                </Box>
-                <Box sx={{
-                  display: "flex "
-                }}>
-                  <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <LightModeIcon />
-                    <Switch checked={darkMode} onChange={toggleDarkMode} />
-                    <DarkModeIcon />
-                  </Box>
-                  <Box sx={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    px: 2
-                  }}>
-                    <AccountCircleIcon />
-                    <Box px={2}>
-                      <div>Name</div>
-                      <div>Status</div>
-                    </Box>
+                  <AccountCircleIcon />
+                  <Box px={2}>
+                    <div>Name</div>
+                    <div>Status</div>
                   </Box>
                 </Box>
               </Box>
-            </div>
-          </Toolbar>
-        </AppBar>
+            </Box>
+          </div>
+        </Toolbar>
+      </AppBar>
 
-        <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
-          </DrawerHeader>
-          <Divider />
-          <List>
-            {menuItems.map(({ text, path, icon }, index) => (
-              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-                <ListItemButton
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
+        </DrawerHeader>
+        <Divider />
+        <List>
+          {menuItems.map(({ text, path, icon }, index) => (
+            <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? 'initial' : 'center',
+                  px: 2.5,
+                  backgroundColor: path === location.pathname ? '#F39B49' : 'inherit',
+                  color: path === location.pathname ? 'white' : 'inherit',
+                  '&:hover': {
+                    backgroundColor: '#CF7827',
+                    color: 'white',
+                  },
+                }}
+                component={Link}
+                to={path}
+              >
+                <ListItemIcon
                   sx={{
-                    minHeight: 48,
-                    justifyContent: open ? 'initial' : 'center',
-                    px: 2.5,
-                    backgroundColor: path === location.pathname ? '#F39B49' : 'inherit',
-                    color: path === location.pathname ? 'white' : 'inherit',
-                    '&:hover': {
-                      backgroundColor: '#CF7827', 
-                      color:'white'
-                    },
+                    minWidth: 0,
+                    mr: open ? 3 : 'auto',
+                    justifyContent: 'center',
+                    filter: path === location.pathname ? `invert(1)` : theme.palette.mode === 'dark' ? 'invert(1)' : 'invert(0)',
                   }}
-                  component={Link}
-                  to={path}
                 >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : 'auto',
-                      justifyContent: 'center',
-                      filter: path === location.pathname ? "invert(1)":""
-                    }}
-                  >
-                    <img src={icon}  
-                    alt="" 
-                    
-                    />
-                  </ListItemIcon>
-                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-          </List>
-          <Divider />
-        </Drawer>
-        <Box sx={{ display: "flex" }}>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              bgcolor: "#999999",
-              borderRadius: "0 10px 10px 0",
-              mt: 10,
-              width: "30px",
-              height: "40px",
-              pl: 2
-            }}
-
-          >
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton></Box>
-      </Box>
-    </ThemeProvider>
+                  <img src={icon}
+                    alt=""
+                  />
+                </ListItemIcon>
+                <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+      </Drawer>
+      <Box sx={{ display: "flex" }}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          sx={{
+            position: 'absolute',
+            zIndex: 1,
+            bgcolor: theme.palette.primary.main, 
+            borderRadius: "0 10px 10px 0",
+            mt: 8.3,
+            width: "30px",
+            height: "55px",
+            pl: 2
+          }}
+        >
+          {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+        </IconButton></Box>
+    </Box>
   );
 }
