@@ -185,7 +185,7 @@ export default function SideBar({ toggleDarkMode, darkMode }: { toggleDarkMode: 
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
-                  px: 2.5,
+                  px: 2,
                   backgroundColor: path === location.pathname ? '#F39B49' : 'inherit',
                   color: path === location.pathname ? 'white' : 'inherit',
                   '&:hover': {
@@ -201,7 +201,7 @@ export default function SideBar({ toggleDarkMode, darkMode }: { toggleDarkMode: 
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
-                    filter: path === location.pathname ? `invert(1)` : theme.palette.mode === 'dark' ? 'invert(1)' : 'invert(0)',
+                    filter:path === location.pathname ? `invert(1)` : theme.palette.mode === 'dark' ? 'invert(1)' : 'invert(0)',
                   }}
                 >
                   <img src={icon}

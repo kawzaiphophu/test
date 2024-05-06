@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { Box, Select, MenuItem } from '@mui/material';
-import { VictoryBar, VictoryChart, VictoryAxis, VictoryTooltip } from 'victory';
-import { SelectChangeEvent } from '@mui/material/Select';
+import * as React from 'react';
+import { Box, colors, Typography } from '@mui/material';
+import { BarChart } from '@mui/x-charts/BarChart';
 import { useTheme } from '@mui/material/styles';
+import { Padding } from '@mui/icons-material';
 
 const generateRandomData = () => {
   const data = [];
-  const min = 400;
-  const max = 1000;
+  const min = 400000;
+  const max = 1000000;
 
   for (let i = 1; i <= 12; i++) {
     const sales = Math.floor(Math.random() * (max - min + 1)) + min;
@@ -17,66 +17,43 @@ const generateRandomData = () => {
   return data;
 };
 
-const DashboardChart: React.FC = () => {
-  const theme = useTheme(); 
-  const [selectedYear, setSelectedYear] = useState<string>('2024');
-  const [chartData, setChartData] = useState(generateRandomData());
+const valueFormatter = (value: number | null) => `${value}mm`;
 
-  const handleChange = (event: SelectChangeEvent<string>) => {
-    setSelectedYear(event.target.value);
-    setChartData(generateRandomData());
+export default function BarsDataset() {
+  const theme = useTheme();
+  const [dataset, setDataset] = React.useState(generateRandomData());
+
+  const chartSetting = {
+    height: 400,
+    sx: {
+      '& .MuiChartBar-root': {
+        fill: theme.palette.text.primary,
+      },
+      p: 2,
+      width: '100%', 
+    },
   };
 
   return (
-    <Box sx={{ margin: 2,  bgcolor:theme.palette.primary.main, borderRadius: 5 }}>
-      <Box
-        sx={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          margin: 2,
-          padding: 2
-        }}>
-        <h4>ยอดขายรวม {selectedYear}</h4>
-        <Select value={selectedYear} onChange={handleChange}>
-          <MenuItem value="2022">2022</MenuItem>
-          <MenuItem value="2023">2023</MenuItem>
-          <MenuItem value="2024">2024</MenuItem>
-        </Select>
-      </Box>
-      <Box sx={{ paddingX: 5 }}>
-        <VictoryChart
-          domainPadding={20}
-          width={700}
-          height={300}
-          style={{ parent: { backgroundColor:theme.palette.primary.main } }}
-        >
-          <VictoryAxis
-            tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
-            tickFormat={["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]}
-            style={{
-              axisLabel: { padding: 30, }
-              
-            }}
-          />
-          <VictoryAxis
-            dependentAxis
-            style={{
-              axisLabel: { padding: 20 }
-            }}
-          />
-          <VictoryBar
-            data={chartData}
-            x="month"
-            y="sales"
-            barWidth={20}
-            labels={({ datum }) => `$${datum.sales}`}
-            labelComponent={<VictoryTooltip />}
-          />
-        </VictoryChart>
-      </Box>
+    <Box 
+      sx={{
+        m:1,
+        p: 2,
+        width: "100%",
+        bgcolor: theme.palette.primary.main, 
+        borderRadius: 5,
+        color: theme.palette.primary.contrastText 
+      }}
+    >
+      <Typography variant="h6" gutterBottom>
+        Monthly Sales
+      </Typography>
+      <BarChart
+        dataset={dataset}
+        xAxis={[{ scaleType: 'band', dataKey: 'month' }]}
+        series={[{ dataKey: 'sales', valueFormatter ,color:theme.palette.text.primary}]}
+        {...chartSetting}
+      />
     </Box>
   );
 }
-
-export default DashboardChart;
