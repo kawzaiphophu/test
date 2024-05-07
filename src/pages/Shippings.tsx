@@ -1,6 +1,7 @@
-
 import { Box } from '@mui/material'
-function ManageBanners() {
+
+
+function Shippings() {
   return (
     <Box
     sx={{
@@ -10,9 +11,9 @@ function ManageBanners() {
       borderRadius: 5,
       bgcolor: "lightgrey"
     }}>
-      ManageBanners
+      Shippings
     </Box>
   )
 }
 
-export default ManageBanners
+export default Shippings

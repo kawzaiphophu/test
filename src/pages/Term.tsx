@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 
 
-function ManageTerm() {
+function Term() {
   return (
     <Box
     sx={{
@@ -11,9 +11,9 @@ function ManageTerm() {
       borderRadius: 5,
       bgcolor: "lightgrey"
     }}>
-      ManageTerm
+      Term
     </Box>
   )
 }
 
-export default ManageTerm
+export default Term

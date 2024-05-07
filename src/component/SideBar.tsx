@@ -21,34 +21,10 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-import Chart_Line from '../assets/icon/icon/Interface/Chart_Line.svg'
 import Logo from '../assets/Harnkan logo 1.svg'
-import User_Icon from '../assets/icon/icon/User/User_Circle.svg'
-import ClipBoard from '../assets/icon/icon/clipboard-notes.svg'
-import Truck_icon from '../assets/icon/truck-delivery-outline.svg'
-import Wallet_icon from '../assets/icon/icon/wallet-outline.svg'
-import News_icon from '../assets/icon/icon/newspaper-folding.svg'
-import Tv_icon from '../assets/icon/icon/tv.svg'
-import Note_icon from '../assets/icon/icon/notebooks.svg'
-import Check_icon from '../assets/icon/icon/Warning/Wavy_Check.svg'
-import Chat_icon from '../assets/icon/icon/Communication/Chat_Circle_Dots.svg'
-import Globe_icon from '../assets/icon/icon/Navigation/Globe.svg'
+import menuItems from '../data/MenuLists';
 
 const drawerWidth = 240;
-
-const menuItems = [
-  { text: 'DashBoard', path: '/', icon: Chart_Line },
-  { text: 'จัดการผู้ใช้งาน', path: '/manage-users', icon: User_Icon },
-  { text: 'จัดการคำสั่งซื้อ', path: '/manage-orders', icon: ClipBoard },
-  { text: 'จัดการขนส่ง', path: '/manage-shippings', icon: Truck_icon },
-  { text: 'จัดการเติมเงิน', path: '/manage-topups', icon: Wallet_icon },
-  { text: 'จัดการข่าว', path: '/manage-news', icon: News_icon },
-  { text: 'จัดการแบนเนอร์', path: '/manage-banners', icon: Tv_icon },
-  { text: 'จัดการโพสต์', path: '/manage-posts', icon: Note_icon },
-  { text: 'จัดการ Term', path: '/manage-term', icon: Check_icon },
-  { text: 'ติดต่อสอบถาม', path: '/contact', icon: Chat_icon },
-  { text: 'จัดการ SEO', path: '/manage-seo', icon: Globe_icon }
-];
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,

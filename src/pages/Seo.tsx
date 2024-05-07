@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 
-Box
-function ManageShipings() {
+
+function Seo() {
   return (
     <Box
     sx={{
@@ -11,9 +11,9 @@ function ManageShipings() {
       borderRadius: 5,
       bgcolor: "lightgrey"
     }}>
-      ManageShipings
+      Seo
     </Box>
   )
 }
 
-export default ManageShipings
+export default Seo

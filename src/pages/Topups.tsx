@@ -1,6 +1,6 @@
-import { Box } from '@mui/material'
 
-function ManageTopups() {
+import { Box } from '@mui/material'
+const Topups =()=>{
   return (
     <Box
     sx={{
@@ -10,9 +10,9 @@ function ManageTopups() {
       borderRadius: 5,
       bgcolor: "lightgrey"
     }}>
-      ManageTopups
+      Topups
     </Box>
   )
 }
 
-export default ManageTopups
+export default Topups

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
-import Buttons from '../component/Button'
-import CustomInput from '../component/Input'
+import CustomButton from '../component/CustomButton';
+import CustomInput from '../component/CustomInput';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
@@ -30,21 +30,21 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function ManageUsers() {
+const Users = () => {
   const theme = useTheme();
 
   function createData(
     id: number,
     img: string,
     name: string,
-    sex: string,
+    gender: string,
     email: string,
     phone: string,
     shopName: string,
     amount: number,
 
   ) {
-    return { id, img, name, sex, email, phone, shopName, amount };
+    return { id, img, name, gender, email, phone, shopName, amount };
   }
 
   const rows = [
@@ -74,7 +74,7 @@ function ManageUsers() {
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
         <CustomInput label='ค้นหา' disabled={false} placeholder='ค้นหาชื่อ อีเมล เบอร์โทรศัพท์' />
-        <Buttons Text={"ค้นหา"} Style={"contained"} Size={"large"} Color='primary' />
+        <CustomButton text={"ค้นหา"} style={"contained"} size={"large"} color='primary' />
       </Box>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -101,7 +101,7 @@ function ManageUsers() {
                   <img style={{ maxWidth: '5rem', maxHeight: '5ren' }} src={row.img} alt="" />
                 </StyledTableCell>
                 <StyledTableCell align="center">{row.name}</StyledTableCell>
-                <StyledTableCell align="center">{row.sex}</StyledTableCell>
+                <StyledTableCell align="center">{row.gender}</StyledTableCell>
                 <StyledTableCell align="center">{row.email}</StyledTableCell>
                 <StyledTableCell align="center">{row.phone}</StyledTableCell>
                 <StyledTableCell align="center">{row.shopName}</StyledTableCell>
@@ -116,6 +116,6 @@ function ManageUsers() {
   )
 }
 
-export default ManageUsers
+export default Users
 
 

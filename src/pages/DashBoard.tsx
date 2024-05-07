@@ -1,12 +1,10 @@
 import Box from '@mui/material/Box';
-import BoxDashBoard from '../component/BoxDashBoard';
+
 import ChartDashBoard from '../component/ChartDashBoard';
-import Buttons from '../component/Button';
-import { useTheme } from '@mui/material/styles';
+import BoxdashBoard from '../component/BoxdashBoard';
 
+function Dashboard() {
 
-function DashBoard() {
-  const theme = useTheme();
   return (
     <div >
       <Box 
@@ -20,12 +18,12 @@ function DashBoard() {
         sx={{ display: "flex", 
         justifyContent: "space-between",
         }}>
-          <BoxDashBoard title="ยอดขายวันนี้" date="24-10-42" sum={20000} />
-          <BoxDashBoard title="ยอดขายเดือนนี้" date="24-10-42" sum={300000} />
-          <BoxDashBoard title="ยอดขายปีนี้" date="24-10-42" sum={4000000} /> 
+          <BoxdashBoard title="ยอดขายวันนี้" date="24-10-42" sum={20000} />
+          <BoxdashBoard title="ยอดขายเดือนนี้" date="24-10-42" sum={300000} />
+          <BoxdashBoard title="ยอดขายปีนี้" date="24-10-42" sum={4000000} /> 
         </Box>
         <Box className="top-dashBoard" sx={{ display: "flex", justifyContent: "space-between" }}>
-        <ChartDashBoard/><ChartDashBoard/>
+        <ChartDashBoard/> <ChartDashBoard/>
         </Box>
 
       </Box>
@@ -33,4 +31,4 @@ function DashBoard() {
   );
 }
 
-export default DashBoard;
+export default Dashboard;

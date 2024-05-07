@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 
-Box
-function ManageSeo() {
+
+function Posts() {
   return (
     <Box
     sx={{
@@ -11,9 +11,9 @@ function ManageSeo() {
       borderRadius: 5,
       bgcolor: "lightgrey"
     }}>
-      ManageSeo
+      Posts
     </Box>
   )
 }
 
-export default ManageSeo
+export default Posts

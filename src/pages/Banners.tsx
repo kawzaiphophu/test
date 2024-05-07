@@ -1,7 +1,6 @@
 
 import { Box } from '@mui/material'
-
-function ManageOrders() {
+const Banners =()=>{
   return (
     <Box
     sx={{
@@ -11,9 +10,9 @@ function ManageOrders() {
       borderRadius: 5,
       bgcolor: "lightgrey"
     }}>
-      ManageOrders
+      banners
     </Box>
   )
 }
 
-export default ManageOrders
+export default Banners

@@ -1,14 +1,9 @@
 import { Box } from '@mui/material';
 import React from 'react';
 import { useTheme } from '@mui/material/styles'; 
+import { BoxDashBoardProps } from '../types/BoxDashBoardProps';
 
-interface BoxDashBoardProps {
-  title: string;
-  date: string;
-  sum: number;
-}
-
-const BoxDashBoard: React.FC<BoxDashBoardProps> = ({ title, date, sum }) => {
+const BoxdashBoard: React.FC<BoxDashBoardProps> = ({ title, date, sum }) => {
   const theme = useTheme(); 
   const formattedSum = sum.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
@@ -39,4 +34,4 @@ const BoxDashBoard: React.FC<BoxDashBoardProps> = ({ title, date, sum }) => {
   );
 }
 
-export default BoxDashBoard;
+export default BoxdashBoard;

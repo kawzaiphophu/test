@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { Box, colors, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { BarChart } from '@mui/x-charts/BarChart';
 import { useTheme } from '@mui/material/styles';
-import { Padding } from '@mui/icons-material';
+
 
 const generateRandomData = () => {
   const data = [];
@@ -17,7 +17,7 @@ const generateRandomData = () => {
   return data;
 };
 
-const valueFormatter = (value: number | null) => `${value}mm`;
+const valueFormatter = (value: number | null) => `${value}$`;
 
 export default function BarsDataset() {
   const theme = useTheme();

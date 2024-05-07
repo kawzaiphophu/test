@@ -1,7 +1,7 @@
+
 import { Box } from '@mui/material'
 
-
-function ManagePosts() {
+function Orders() {
   return (
     <Box
     sx={{
@@ -11,9 +11,9 @@ function ManagePosts() {
       borderRadius: 5,
       bgcolor: "lightgrey"
     }}>
-      ManagePosts
+      Orders
     </Box>
   )
 }
 
-export default ManagePosts
+export default Orders
