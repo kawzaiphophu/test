@@ -17,3 +17,7 @@
     width: 140px;
     height: 35px;
 }
+.Button:disabled {
+    color: white;
+    background: #000;
+  }

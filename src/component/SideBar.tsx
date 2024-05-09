@@ -21,6 +21,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
+
 import Logo from '../assets/Harnkan logo 1.svg'
 import menuItems from '../data/MenuLists';
 
@@ -155,7 +156,7 @@ export default function SideBar({ toggleDarkMode, darkMode }: { toggleDarkMode: 
         </DrawerHeader>
         <Divider />
         <List>
-          {menuItems.map(({ text, path, icon }, index) => (
+          {menuItems.map(({ text, path, icon }) => (
             <ListItem key={text} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
                 sx={{
@@ -177,7 +178,7 @@ export default function SideBar({ toggleDarkMode, darkMode }: { toggleDarkMode: 
                     minWidth: 0,
                     mr: open ? 3 : 'auto',
                     justifyContent: 'center',
-                    filter:path === location.pathname ? `invert(1)` : theme.palette.mode === 'dark' ? 'invert(1)' : 'invert(0)',
+                    filter: path === location.pathname ? `invert(1)` : theme.palette.mode === 'dark' ? 'invert(1)' : 'invert(0)',
                   }}
                 >
                   <img src={icon}
@@ -200,7 +201,7 @@ export default function SideBar({ toggleDarkMode, darkMode }: { toggleDarkMode: 
           sx={{
             position: 'absolute',
             zIndex: 1,
-            bgcolor: theme.palette.primary.main, 
+            bgcolor: theme.palette.primary.main,
             borderRadius: "0 10px 10px 0",
             mt: 8.3,
             width: "30px",
