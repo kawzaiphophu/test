@@ -1,4 +1,4 @@
-export interface CategoriesType {
+export interface ICategories {
     categoryId?: number,
     categoryName?: string,
     images?: string,

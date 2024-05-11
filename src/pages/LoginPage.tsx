@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { Container, TextField, Typography } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import CustomButton from '../component/Button/CustomButton';
+import CustomButton from '../components/Button/CustomButton';
 
 
 

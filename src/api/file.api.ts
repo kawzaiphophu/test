@@ -1,4 +1,4 @@
-import { MainApi } from "./MainApi";
+import { MainApi } from "./index.api";
 import { AxiosResponse, AxiosError } from 'axios';
 const path = `upload`;
 const api = MainApi;

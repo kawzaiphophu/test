@@ -1,4 +1,4 @@
-export default interface Inews {
+export interface INews {
     id?: number;
     cover: string;
     image: string;

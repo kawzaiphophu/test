@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
-import CustomButton from '../component/Button/CustomButton';
-import CustomInput from '../component/CustomInput';
+import CustomButton from '@components/Button/CustomButton';
+import CustomInput from '@components/input/CustomInput';
 import { useTheme } from '@mui/material/styles';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';

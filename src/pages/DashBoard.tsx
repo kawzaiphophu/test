@@ -1,7 +1,7 @@
 import Box from '@mui/material/Box';
 
-import ChartDashBoard from '../component/ChartDashBoard';
-import BoxdashBoard from '../component/BoxdashBoard';
+import ChartDashBoard from '../components/Dashboard/ChartDashBoard';
+import BoxdashBoard from '../components/Dashboard/BoxDashboard';
 
 export default function Dashboard() {
 

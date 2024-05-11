@@ -30,6 +30,6 @@ const containerStyles = {
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    background: 'rgba(0, 0, 0, 0.7)',
+    background: 'rgba(0, 0, 0, 0.9)',
     zIndex: 9999
 }

@@ -1,17 +1,18 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box, createTheme, ThemeProvider } from '@mui/material';
 
-import SideBar from './component/SideBar';
-import Loading from './component/Loading/Loading';
+import SideBar from './components/SideBar';
+import Loading from './components/Loading/Loading';
+import NavBar from './components/NavBar';
 
 import Dashboard from './pages/Dashboard';
 import Contact from './pages/Contact';
 import Banners from './pages/Banners';
 import News from './pages/News/News';
 import Orders from './pages/Orders';
-import Posts from './pages/Posts';
+import Posts from './pages/Posts/Posts';
 import Seo from './pages/Seo';
 import Shippings from './pages/Shippings';
 import Term from './pages/Term';
@@ -61,10 +62,10 @@ const App: React.FC = () => {
 
     setLoading(true);
     const timer = setTimeout(() => {
-      setLoading(false); 
-    }, 1000); 
+      setLoading(false);
+    }, 1000);
     return () => clearTimeout(timer);
-  }, [location]); 
+  }, [location]);
 
   useAuthCheck(setAuthenticated);
 
@@ -80,10 +81,10 @@ const App: React.FC = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       {loading && <Loading />}
+      <NavBar toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
       <Box sx={{ display: 'flex' }}>
-        <SideBar toggleDarkMode={toggleDarkMode} darkMode={darkMode} />
+        <SideBar />
         <Box
-          component="main"
           sx={boxStyle}
         >
           <Routes>

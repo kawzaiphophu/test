@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Box, Typography } from '@mui/material';
-import Swal from 'sweetalert2';
 
-import CustomInput from '../../component/CustomInput';
-import CustomButton from '../../component/Button/CustomButton';
-import Files from '../../api/Files';
-import NewsApi from '../../api/News';
-import NewsType from '../../types/news.type';
-import Upload_icon from '../../assets/icon/Media/Image_01.svg';
-
-
+import CustomInput from '@components/input/CustomInput';
+import CustomButton from '@components/Button/CustomButton';
+import { INews } from 'types/news.type';
+import Upload_icon from '@assets/icon/Media/Image_01.svg';
+import SuccessSwal from '@components/Alert/SuccessSwal';
+import ErrorSwal from '@components/Alert/ErrorSwal';
+import NewsApi from '@api/news.api';
+import Files from '@api/file.api';
 interface ModalProps {
     modalTitle: string;
     handleClose: () => void;
@@ -19,26 +18,27 @@ interface ModalProps {
 export default function NewsModal({ modalTitle, handleClose, newsId }: ModalProps) {
     const [imagePreview, setImagePreview] = useState<string | null>(null);
     const [image, setImage] = useState<File | null>(null);
-    const [news, setNews] = useState<NewsType | null>();
+    const [news, setNews] = useState<INews>();
 
 
     useEffect(() => {
         if (newsId) {
-            findOne();
+            getNewsById();
         }
     }, [newsId]);
 
-    const findOne = async () => {
+    const getNewsById = async () => {
         try {
-            const response = await NewsApi.findOne(newsId as number);
-            const data = response.data;
+            const { data } = await NewsApi.findOne(newsId as number);
             setNews(data);
         } catch (error) {
-            console.log("Error fetching news:", error);
+            ErrorSwal({
+                // title:error.mess
+            })
         }
     };
 
-    const handleChange = (name: keyof NewsType, value: string) => {
+    const handleChange = (name: keyof INews, value: string) => {
         setNews(prevState => ({
             ...prevState!,
             [name]: value
@@ -57,85 +57,61 @@ export default function NewsModal({ modalTitle, handleClose, newsId }: ModalProp
         }
     };
 
-    const createSubmit = async () => {
+    const handleSubmit = async () => {
         try {
-            const response = await Files.create(image, 'news');
-            const data = response.data[0];
-            const updatedNews = {
-                cover: data.thumbnailFilePath.toString(),
-                image: data.filePath.toString(),
+            let body: INews = {
                 title: news?.title?.toString() || '',
-                description: news?.description?.toString() || ''
+                description: news?.description?.toString() || '',
+                image: '',
+                cover: ''
             };
-            if (response.status === 201 && news !== null) {
-                const res = await NewsApi.create(updatedNews);
-                if (res === 204) {
-                    Swal.fire({
+
+            if (newsId) {
+                // Editing existing news
+                if (image) {
+                    const { data } = await Files.create(image, 'news');
+                    body.cover = data[0]?.thumbnailFilePath;
+                    body.image = data[0]?.filePath;
+                } else if (news && news.cover && news.image) {
+                    body.cover = news.cover;
+                    body.image = news.image;
+                }
+
+                const status = await NewsApi.update(newsId, body);
+                if (status) {
+                    SuccessSwal({
                         icon: 'success',
-                        title: 'News Created Successfully!',
-                        showConfirmButton: false,
-                        timer: 1500
+                        title: 'Success',
+                        text: 'Edit Successfully!',
                     });
                     handleClose();
                 }
             } else {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Error Occurred',
-                    text: 'Failed to create news. Please try again later.',
-                    confirmButtonText: 'OK'
-                });
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
-    const editSubmit = async () => {
-        try {
-            let data: any = {
-                "title": news!.title,
-                "description": news!.description
-            };
-            if (image) {
+                // Creating new news
                 const response = await Files.create(image, 'news');
-                const img = response.data[0];
-                data.cover = img.thumbnailFilePath;
-                data.image = img.filePath;
-            } else if (news && news.cover && news.image) {
-                data.cover = news.cover;
-                data.image = news.image;
-            }
-
-            const response = await NewsApi.update(newsId as number, data);
-            if (response) {
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Edit Successfully!',
-                    showConfirmButton: false,
-                    timer: 1500
-                });
-                handleClose();
+                const imageData = response.data[0];
+                body.cover = imageData.thumbnailFilePath.toString();
+                body.image = imageData.filePath.toString();
+                const res = await NewsApi.create(body);
+                if (res === 204) {
+                    SuccessSwal({
+                        icon: 'success',
+                        title: 'News Created Successfully!',
+                    });
+                    handleClose();
+                }
             }
         } catch (error) {
             console.error('Error:', error);
-            Swal.fire({
+            ErrorSwal({
                 icon: 'error',
                 title: 'Error Occurred',
                 text: 'Failed to create or edit news. Please try again later.',
-                confirmButtonText: 'OK'
             });
         }
     };
 
-
     const isFormFilled = (imagePreview !== null && news && news.title !== '' && news.description !== '');
-
-    // const isFormEdited = (news &&
-    //     news.title === news.title &&
-    //     news.description === news.description &&
-    //     news.cover === news.cover &&
-    //     news.image === news.image);
 
     return (
         <Modal
@@ -179,7 +155,6 @@ export default function NewsModal({ modalTitle, handleClose, newsId }: ModalProp
                         ชื่อข่าว*
                     </Typography>
                     <CustomInput
-                        label="headline"
                         placeholder={'ชื่อข่าว'}
                         id="headline"
                         value={news?.title || ''}
@@ -191,7 +166,6 @@ export default function NewsModal({ modalTitle, handleClose, newsId }: ModalProp
                         รายละเอียด*
                     </Typography>
                     <CustomInput
-                        label="description"
                         placeholder={'รายละเอียด'}
                         id="description"
                         value={news?.description || ''}
@@ -200,11 +174,7 @@ export default function NewsModal({ modalTitle, handleClose, newsId }: ModalProp
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                     <CustomButton text='ยกเลิก' color='primary' style='outlined' onClick={handleClose} />
-                    {newsId ? (
-                        <CustomButton text='แก้ไข' disabled={false} onClick={editSubmit} />
-                    ) : (
-                        <CustomButton text='ยืนยัน' disabled={!isFormFilled} onClick={createSubmit} />
-                    )}
+                    <CustomButton text='ยืนยัน' isDisabled={!isFormFilled} onClick={handleSubmit} />
                 </Box>
             </Box>
         </Modal>

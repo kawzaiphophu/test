@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-
+import CustomTabs from '@components/CustomTabs'
 
 export default function Posts() {
   return (
@@ -12,6 +12,7 @@ export default function Posts() {
         bgcolor: "lightgrey"
       }}>
       Posts
+      <CustomTabs />
     </Box>
   )
 }
