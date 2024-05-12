@@ -21,6 +21,7 @@ export default defineConfig({
       '@assets': '/src/assets',
       '@data': '/src/data',
       '@types': '/src/types',
+      '@pages': '/src/pages',
     },
   },
 });

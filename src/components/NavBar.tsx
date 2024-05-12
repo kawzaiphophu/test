@@ -13,12 +13,16 @@ const AppBar = styled(MuiAppBar)(({ theme }) => ({
     zIndex: theme.zIndex.drawer + 1,
 }))
 
-export default function NavBar({ toggleDarkMode, darkMode }: { toggleDarkMode: any, darkMode: boolean }) {
-    return (
+interface NavBar {
+    toggleDarkMode: () => void,
+    darkMode: boolean
+}
 
+export default function NavBar({ toggleDarkMode, darkMode }: NavBar) {
+    return (
         <AppBar position="fixed" color='inherit'>
             <Toolbar>
-                <div style={{ width: '100%' }}>
+                <div style={{ width: '100%', height: '100%' }}>
                     <Box
                         sx={{
                             display: 'flex',

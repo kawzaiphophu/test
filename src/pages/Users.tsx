@@ -39,17 +39,8 @@ export default function Users() {
   ];
 
   return (
-    <Box
-      sx={{
-        width: 'auto',
-        mt: 7,
-        ml: 1,
-        p: 4,
-        borderRadius: 3,
-        bgcolor: theme.palette.primary.main,
-      }}>
+    <Box>
       <Box sx={{
-        display: "flex",
         fontWeight: 600,
         color: '#F37F3D',
         borderRadius: 2

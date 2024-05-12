@@ -9,7 +9,7 @@ function CustomSwitch({ checked = false, ...props }) {
     '& .MuiSwitch-switchBase': {
       padding: 0,
       margin: 2,
-      transitionDuration: '300ms',
+      transitionDuration: '30 0ms',
       '&.Mui-checked': {
         transform: 'translateX(16px)',
         color: '#fff',

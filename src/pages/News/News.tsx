@@ -83,8 +83,8 @@ export default function News() {
     };
 
     return (
-        <Box sx={containerStyles}>
-            <Box sx={titleStyles}>จัดการข่าว</Box>
+        <Box>
+            <Box className="title">จัดการข่าว</Box>
             <Box sx={searchBoxStyles}>
                 <Box sx={{ width: "40%", pr: 2 }}>
                     <CustomInput label='ค้นหา' placeholder='ค้นหาข่าว' />
@@ -167,17 +167,7 @@ const StyledTableRow = styled(TableRow)(() => ({
 
 }));
 
-const containerStyles = {
-    width: 'auto',
-    mt: 7,
-    ml: 1,
-    p: 4,
-    borderRadius: 3,
-    bgcolor: 'primary.main',
-};
-
 const titleStyles = {
-    display: "flex",
     fontWeight: 600,
     color: 'secondary.main',
     borderRadius: 2,
